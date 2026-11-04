@@ -1,0 +1,94 @@
+// =====================================================================
+//  BRANDING - THE ONLY FILE YOU NEED TO EDIT FOR COLORS AND FONTS
+// =====================================================================
+//
+//  Change a value here, then rebuild the theme:
+//      make theme          (or: cd CTFd/themes/core-beta && npm run build)
+//
+//  Every colour and font in the user interface derives from the values
+//  below, so you never have to hunt through stylesheets.
+//
+//  Current palette: Exclusive Networks (Brand Guidelines, April 2019)
+//  purple #A4027D + blue #839FAD; green/gold only as supplements.
+//  Variable NAMES are kept from the original theme ($brand-orange is the
+//  primary accent, $brand-navy the dark surface) so no other file changes.
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  1. BRAND COLOURS
+// ---------------------------------------------------------------------
+
+// Exclusive Networks purple - primary accent, buttons, links, highlights.
+$brand-orange: #a4027d !default;
+
+// Dark surfaces, navbar, hero. Derived deep shade of the brand purple
+// (not an official guideline colour).
+$brand-navy: #2b0b26 !default;
+
+// A brighter blue used for secondary accents and gradients.
+$brand-blue: #839fad !default;
+
+// White / near-white light page surfaces.
+$brand-white: #ffffff !default;
+$brand-offwhite: #f5f6f7 !default;
+
+// Neutral grey - body text on light surfaces, muted labels.
+$brand-grey: #5b6770 !default;
+
+// Feedback colours.
+$brand-success: #6aa54b !default;
+$brand-warning: #ff9933 !default;
+$brand-danger: #e5484d !default;
+$brand-info: $brand-blue !default;
+
+// Awaiting-review colour, used by the approval workflow.
+$brand-pending: #ff9933 !default;
+
+// Accent text on the dark hero/navbar: a light tint of the brand purple,
+// because full purple on the dark surface lacks contrast.
+$brand-accent-on-dark: #d580c2 !default;
+
+// ---------------------------------------------------------------------
+//  2. FONTS
+// ---------------------------------------------------------------------
+//
+//  $font-body      body copy, tables, forms
+//  $font-heading   headings, hero titles, navbar brand
+//  $font-mono      code, flags, terminal-style text
+//
+//  Exclusive Networks uses Helvetica Neue (proprietary, not bundled): the
+//  system stack falls back to Helvetica/Arial. Lato/Raleway are still bundled. To use another
+//  family, add it to package.json as a @fontsource package, import it in
+//  includes/utils/_fonts.scss, then name it here.
+
+$font-body: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-heading: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-mono: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace !default;
+
+// Base font size for the whole UI. Everything else scales from this.
+$font-size-root: 16px !default;
+
+// Heading weight and letter spacing.
+$font-weight-heading: 500 !default;
+$letter-spacing-heading: 0.5px !default;
+
+// ---------------------------------------------------------------------
+//  3. SHAPE AND DEPTH
+// ---------------------------------------------------------------------
+
+$brand-radius: 0.625rem !default;
+$brand-radius-sm: 0.375rem !default;
+$brand-radius-lg: 1rem !default;
+
+$brand-shadow: 0 4px 16px rgba(43, 11, 38, 0.08) !default;
+$brand-shadow-lg: 0 12px 32px rgba(43, 11, 38, 0.14) !default;
+
+// Maximum content width on wide screens.
+$brand-content-width: 1240px !default;
+
+// =====================================================================
+//  Semantic roles - referenced by the rest of the stylesheets.
+// =====================================================================
+
+$brand-primary: $brand-orange !default;
+$brand-secondary: $brand-navy !default;

@@ -1,0 +1,257 @@
+// ---------------------------------------------------------------------
+//  Hack the Brewery (Exclusive Networks) - main stylesheet
+//
+//  Colours and fonts are defined in includes/_brand.scss.
+//  Edit that file, then run `make theme` to rebuild.
+// ---------------------------------------------------------------------
+
+@use "sass:color";
+@use "includes/brand" as brand;
+
+// Map the brand palette onto Bootstrap's own variables so that every
+// built-in component (buttons, alerts, badges, forms, navs) is branded.
+@use "bootstrap/scss/bootstrap" as * with (
+  $primary: brand.$brand-primary,
+  $secondary: brand.$brand-secondary,
+  $success: brand.$brand-success,
+  $info: brand.$brand-info,
+  $warning: brand.$brand-warning,
+  $danger: brand.$brand-danger,
+  $light: brand.$brand-offwhite,
+  $dark: brand.$brand-navy,
+
+  $font-family-sans-serif: brand.$font-body,
+  $font-family-monospace: brand.$font-mono,
+  $headings-font-family: brand.$font-heading,
+  $headings-font-weight: brand.$font-weight-heading,
+
+  $border-radius: brand.$brand-radius,
+  $border-radius-sm: brand.$brand-radius-sm,
+  $border-radius-lg: brand.$brand-radius-lg,
+
+  $link-color: brand.$brand-primary,
+  $link-hover-color: color.scale(brand.$brand-primary, $lightness: -15%),
+
+  $body-color: #212529,
+  $enable-shadows: false,
+  $enable-negative-margins: true
+);
+
+@use "includes/components/table";
+@use "includes/components/jumbotron";
+@use "includes/components/challenge";
+@use "includes/components/sticky-footer";
+@use "includes/components/graphs";
+@use "includes/components/hero";
+@use "includes/components/auth";
+@use "includes/components/mcq";
+@use "includes/components/board";
+
+@use "includes/utils/fonts";
+@use "includes/utils/opacity";
+@use "includes/utils/min-height";
+@use "includes/utils/cursors";
+@use "includes/utils/lolight";
+
+@use "includes/icons/award-icons";
+@use "includes/icons/flag-icons";
+
+// ---------------------------------------------------------------------
+//  Expose the palette as CSS custom properties so templates and
+//  JavaScript can use it without recompiling SCSS.
+// ---------------------------------------------------------------------
+:root {
+  --ns-orange: #{brand.$brand-orange};
+  --ns-navy: #{brand.$brand-navy};
+  --ns-blue: #{brand.$brand-blue};
+  --ns-white: #{brand.$brand-white};
+  --ns-offwhite: #{brand.$brand-offwhite};
+  --ns-grey: #{brand.$brand-grey};
+
+  --ns-primary: #{brand.$brand-primary};
+  --ns-secondary: #{brand.$brand-secondary};
+  --ns-pending: #{brand.$brand-pending};
+  --ns-success: #{brand.$brand-success};
+  --ns-danger: #{brand.$brand-danger};
+  --ns-warning: #{brand.$brand-warning};
+
+  --ns-font-body: #{brand.$font-body};
+  --ns-font-heading: #{brand.$font-heading};
+  --ns-font-mono: #{brand.$font-mono};
+
+  --ns-radius: #{brand.$brand-radius};
+  --ns-radius-sm: #{brand.$brand-radius-sm};
+  --ns-radius-lg: #{brand.$brand-radius-lg};
+  --ns-shadow: #{brand.$brand-shadow};
+  --ns-shadow-lg: #{brand.$brand-shadow-lg};
+  --ns-content-width: #{brand.$brand-content-width};
+
+  --ns-gradient: linear-gradient(
+    135deg,
+    #{brand.$brand-navy} 0%,
+    #{color.mix(brand.$brand-navy, brand.$brand-blue, 70%)} 55%,
+    #{color.mix(brand.$brand-navy, brand.$brand-blue, 45%)} 100%
+  );
+}
+
+// ---------------------------------------------------------------------
+//  Global type and layout
+// ---------------------------------------------------------------------
+html {
+  font-size: brand.$font-size-root;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: brand.$font-body;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: brand.$font-heading;
+  font-weight: brand.$font-weight-heading;
+  letter-spacing: brand.$letter-spacing-heading;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: brand.$font-mono;
+}
+
+blockquote {
+  border-left: 4px solid brand.$brand-primary;
+  padding: 0.25rem 0 0.25rem 1rem;
+  background: rgba(brand.$brand-primary, 0.05);
+  border-radius: 0 brand.$brand-radius-sm brand.$brand-radius-sm 0;
+}
+
+input,
+select {
+  padding: 0.6rem !important;
+  height: auto !important;
+}
+
+.fa-spin.spinner {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.badge-notification {
+  vertical-align: top;
+  margin-left: -1.5em;
+  font-size: 50%;
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
+  background-size: 8px 10px;
+}
+
+// ---------------------------------------------------------------------
+//  Branded navbar
+// ---------------------------------------------------------------------
+.navbar.navbar-dark {
+  background: brand.$brand-navy !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+
+  .navbar-brand {
+    font-family: brand.$font-heading;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+
+    img {
+      max-height: 34px;
+      width: auto;
+    }
+  }
+
+  .nav-link {
+    position: relative;
+    font-weight: 600;
+    transition: color 0.15s ease-in-out;
+
+    &:hover,
+    &:focus {
+      color: brand.$brand-primary !important;
+    }
+
+    &.active::after {
+      content: "";
+      position: absolute;
+      left: 0.5rem;
+      right: 0.5rem;
+      bottom: 0.15rem;
+      height: 2px;
+      border-radius: 2px;
+      background: brand.$brand-primary;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+//  Buttons and cards
+// ---------------------------------------------------------------------
+.btn {
+  font-weight: 600;
+  border-radius: brand.$brand-radius-sm;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.btn-primary {
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(brand.$brand-primary, 0.35);
+  }
+}
+
+.card {
+  border: 1px solid rgba(brand.$brand-navy, 0.08);
+  border-radius: brand.$brand-radius;
+  box-shadow: brand.$brand-shadow;
+}
+
+// ---------------------------------------------------------------------
+//  Responsive helpers - keep long content readable on small screens
+// ---------------------------------------------------------------------
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.table-responsive-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@include media-breakpoint-down(md) {
+  html {
+    font-size: 15px;
+  }
+
+  .container,
+  .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

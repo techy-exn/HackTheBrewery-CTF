@@ -1,0 +1,8 @@
+.env
+.data/
+**/node_modules/
+**/__pycache__/
+*.py[cod]
+.DS_Store
+CTFd/logs/*.log
+.ctfd_secret_key

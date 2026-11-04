@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ns-auth">
+  <div class="ns-auth__card">
+
+    <div class="ns-auth__brand">
+      {% if Configs.ctf_logo %}
+        <img src="{{ url_for('views.files', path=Configs.ctf_logo) }}" alt="{{ Configs.ctf_name }}">
+      {% endif %}
+      <h1 class="ns-auth__title">{% trans %}Welcome back{% endtrans %}</h1>
+      <p class="ns-auth__sub">Sign in to continue the workshop</p>
+    </div>
+
+    {% include "components/errors.html" %}
+
+    {% with form = Forms.auth.LoginForm() %}
+      <form method="post" accept-charset="utf-8">
+        <div class="mb-3">
+          {{ form.name.label(class="form-label fw-semibold") }}
+          {{ form.name(class="form-control", value=name, autocomplete="username email", placeholder="Username or email") }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.password.label(class="form-label fw-semibold") }}
+          {{ form.password(class="form-control", value=password, autocomplete="current-password", placeholder="Password") }}
+        </div>
+
+        <div class="d-grid mt-4">
+          {{ form.submit(class="btn btn-primary") }}
+        </div>
+
+        <div class="text-center mt-3">
+          <a class="small" href="{{ url_for('auth.reset_password') }}">
+            {% trans %}Forgot your password?{% endtrans %}
+          </a>
+        </div>
+
+        {{ form.nonce() }}
+      </form>
+    {% endwith %}
+
+    {% if registration_visible() %}
+      <div class="ns-auth__divider">or</div>
+      <div class="ns-auth__footer">
+        New here?
+        <a href="{{ url_for('auth.register') }}">Create an account</a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

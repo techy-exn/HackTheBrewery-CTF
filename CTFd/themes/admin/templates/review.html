@@ -1,0 +1,162 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<div class="container">
+		<h1>Awaiting review</h1>
+		<p class="mb-0 text-muted">
+			Answers submitted for activities that an instructor must approve.
+		</p>
+	</div>
+</div>
+
+<div class="container">
+
+	{% if pending %}
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-muted">
+					{{ pending|length }} answer{{ '' if pending|length == 1 else 's' }} waiting.
+					Approving awards the points and lets the student continue.
+				</p>
+
+				<div class="table-responsive">
+					<table class="table table-striped align-middle">
+						<thead>
+							<tr>
+								<th class="text-center" style="width:4rem;">ID</th>
+								<th>Student</th>
+								<th>Activity</th>
+								<th>Answer</th>
+								<th class="text-center" style="width:6rem;">Points</th>
+								<th class="text-center">Submitted</th>
+								<th class="text-center" style="width:12rem;">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in pending %}
+							<tr id="review-row-{{ item.id }}">
+								<td class="text-center text-muted">{{ item.id }}</td>
+
+								<td>
+									{% if item.account %}
+										<a href="{{ url_for('admin.users_detail', user_id=item.user_id) }}">
+											{{ item.account.name }}
+										</a>
+									{% else %}
+										<span class="text-muted">(deleted)</span>
+									{% endif %}
+								</td>
+
+								<td>
+									{% if item.challenge %}
+										<a href="{{ url_for('admin.challenges_detail', challenge_id=item.challenge_id) }}">
+											{{ item.challenge.name }}
+										</a>
+										<div class="small text-muted">{{ item.challenge.category }}</div>
+									{% else %}
+										<span class="text-muted">(deleted)</span>
+									{% endif %}
+								</td>
+
+								<td style="max-width:26rem;">
+									<code class="ns-review-answer">{{ item.provided }}</code>
+								</td>
+
+								<td class="text-center">
+									{{ item.challenge.value if item.challenge else 0 }}
+								</td>
+
+								<td class="text-center text-muted small">
+									{{ item.date | isoformat }}
+								</td>
+
+								<td class="text-center">
+									<div class="btn-group btn-group-sm" role="group">
+										<button type="button" class="btn btn-success review-approve"
+										        data-submission-id="{{ item.id }}">
+											<i class="fas fa-check pe-1"></i> Approve
+										</button>
+										<button type="button" class="btn btn-outline-danger review-reject"
+										        data-submission-id="{{ item.id }}">
+											<i class="fas fa-times pe-1"></i> Reject
+										</button>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="row">
+			<div class="col-md-12 text-center py-5">
+				<i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+				<h4>Nothing waiting</h4>
+				<p class="text-muted">
+					Answers that need approval will appear here.
+					Mark an activity's flag as <strong>Requires approval</strong> to use this queue.
+				</p>
+			</div>
+		</div>
+	{% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+	(function () {
+		function act(id, action, button) {
+			var row = document.getElementById("review-row-" + id);
+			var group = button.closest(".btn-group");
+			if (group) {
+				group.querySelectorAll("button").forEach(function (b) { b.disabled = true; });
+			}
+
+			return CTFd.fetch("/api/v1/submissions/" + id + "/" + action, {
+				method: "POST",
+			})
+				.then(function (response) { return response.json(); })
+				.then(function (data) {
+					if (data.success) {
+						if (row) {
+							row.style.transition = "opacity .2s ease";
+							row.style.opacity = "0";
+							setTimeout(function () { row.remove(); }, 200);
+						}
+					} else {
+						alert("Could not " + action + " this submission.");
+						if (group) {
+							group.querySelectorAll("button").forEach(function (b) { b.disabled = false; });
+						}
+					}
+				})
+				.catch(function () {
+					alert("Could not " + action + " this submission.");
+					if (group) {
+						group.querySelectorAll("button").forEach(function (b) { b.disabled = false; });
+					}
+				});
+		}
+
+		document.querySelectorAll(".review-approve").forEach(function (b) {
+			b.addEventListener("click", function () {
+				act(b.dataset.submissionId, "approve", b);
+			});
+		});
+
+		document.querySelectorAll(".review-reject").forEach(function (b) {
+			b.addEventListener("click", function () {
+				if (confirm("Reject this answer? It will be recorded as incorrect and the student can try again.")) {
+					act(b.dataset.submissionId, "reject", b);
+				}
+			});
+		});
+	})();
+</script>
+{% endblock %}

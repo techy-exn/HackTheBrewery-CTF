@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ns-auth">
+  <div class="ns-auth__card">
+
+    <div class="ns-auth__brand">
+      {% if Configs.ctf_logo %}
+        <img src="{{ url_for('views.files', path=Configs.ctf_logo) }}" alt="{{ Configs.ctf_name }}">
+      {% endif %}
+      <h1 class="ns-auth__title">{% trans %}Create your account{% endtrans %}</h1>
+      <p class="ns-auth__sub">Register to start the workshop and track your progress</p>
+    </div>
+
+    {% include "components/errors.html" %}
+
+    {% with form = Forms.auth.RegistrationForm() %}
+      {% from "macros/forms.html" import render_extra_fields %}
+
+      <form method="post" accept-charset="utf-8" role="form">
+
+        <div class="mb-3">
+          {{ form.name.label(class="form-label fw-semibold") }}
+          {{ form.name(class="form-control", value=name, autocomplete="username", placeholder="e.g. brewer7") }}
+          <small class="form-text text-muted">
+            {% trans %}Shown on the scoreboard{% endtrans %}
+          </small>
+        </div>
+
+        <div class="mb-3">
+          {{ form.email.label(class="form-label fw-semibold") }}
+          {{ form.email(class="form-control", value=email, autocomplete="email", placeholder="you@company.com") }}
+          <small class="form-text text-muted">
+            {% trans %}Never shown publicly{% endtrans %}
+          </small>
+        </div>
+
+        <div class="mb-3">
+          {{ form.password.label(class="form-label fw-semibold") }}
+          {{ form.password(class="form-control", value=password, autocomplete="new-password", placeholder="Choose a password") }}
+        </div>
+
+        {{ form.nonce() }}
+
+        {{ render_extra_fields(form.extra) }}
+
+        <div class="d-grid mt-4">
+          {{ form.submit(class="btn btn-primary") }}
+        </div>
+
+        {% if Configs.tos_or_privacy %}
+          <div class="text-center mt-3">
+            <small class="text-muted">
+              {% trans trimmed privacy_link=Configs.privacy_link, tos_link=Configs.tos_link %}
+              By registering, you agree to the
+              <a href="{{ privacy_link }}" target="_blank">privacy policy</a>
+              and <a href="{{ tos_link }}" target="_blank">terms of service</a>
+              {% endtrans %}
+            </small>
+          </div>
+        {% endif %}
+      </form>
+    {% endwith %}
+
+    <div class="ns-auth__divider">or</div>
+    <div class="ns-auth__footer">
+      Already registered?
+      <a href="{{ url_for('auth.login') }}">Sign in</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

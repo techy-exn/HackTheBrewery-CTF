@@ -1,0 +1,99 @@
+import Alpine from "alpinejs";
+import dayjs from "dayjs";
+import { Tab } from "bootstrap";
+
+import CTFd from "./index";
+
+window.Alpine = Alpine;
+
+Alpine.data("SetupForm", () => ({
+  init() {
+    // Bind Enter on any input to clicking the Next button
+    this.$root.querySelectorAll("input").forEach(i => {
+      i.addEventListener("keypress", e => {
+        if (e.key == "Enter") {
+          e.preventDefault();
+          e.target.closest(".tab-pane").querySelector("button[data-href]").click();
+        }
+      });
+      i.addEventListener("change", e => {
+        if (e.target.checkValidity() === false) {
+          e.target.classList.add("input-filled-invalid");
+        } else {
+          e.target.classList.remove("input-filled-invalid");
+        }
+      });
+    });
+
+  },
+
+  validateFileSize(e, limit) {
+    if (e.target.files[0].size > limit) {
+      if (
+        !confirm(
+          `This image file is larger than ${
+            limit / 1000
+          }KB which may result in increased load times. Are you sure you'd like to use this file?`,
+        )
+      ) {
+        e.target.value = "";
+      }
+    }
+  },
+
+  switchTab(e) {
+    // Handle tab validation
+    let valid_tab = true;
+    let inputs = e.target
+      .closest('[role="tabpanel"]')
+      .querySelectorAll("input,textarea");
+
+    inputs.forEach(e => {
+      if (e.checkValidity() === false) {
+        e.classList.add("input-filled-invalid");
+        valid_tab = false;
+      }
+    });
+
+    if (valid_tab == false) {
+      return;
+    }
+
+    let target = e.target.dataset.href;
+    let tab = this.$root.querySelector(`[data-bs-target="${target}"]`);
+    Tab.getOrCreateInstance(tab).show();
+  },
+
+  setThemeColor(e) {
+    document.querySelector("#config-color-input").value = e.target.value;
+  },
+
+  resetThemeColor(_e) {
+    document.querySelector("#config-color-input").value = "";
+    document.querySelector("#config-color-picker").value = "";
+  },
+
+  processDateTime(datetime) {
+    return function (_event) {
+      let date_picker = document.querySelector(`#${datetime}-date`);
+      let time_picker = document.querySelector(`#${datetime}-time`);
+      let unix_time = dayjs(
+        `${date_picker.value} ${time_picker.value}`,
+        "YYYY-MM-DD HH:mm",
+      ).unix();
+
+      if (isNaN(unix_time)) {
+        document.querySelector(`#${datetime}-preview`).value = "";
+      } else {
+        document.querySelector(`#${datetime}-preview`).value = unix_time;
+      }
+    };
+  },
+
+  submitSetup(_e) {
+    // The CTFd newsletter checkbox was removed from setup.html, so there is
+    // nothing to do here; the form submits normally.
+  },
+}));
+
+Alpine.start();

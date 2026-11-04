@@ -1,0 +1,128 @@
+// ---------------------------------------------------------------------
+//  Login / register / reset - branded split layout
+// ---------------------------------------------------------------------
+@use "../brand" as brand;
+
+.ns-auth {
+  min-height: calc(100vh - 4rem);
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ns-auth::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(brand.$brand-orange, 0.1) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 88% 78%,
+      rgba(brand.$brand-blue, 0.12) 0%,
+      transparent 45%
+    );
+}
+
+.ns-auth__card {
+  width: 100%;
+  max-width: 27rem;
+  background: #fff;
+  border: 1px solid rgba(brand.$brand-navy, 0.09);
+  border-radius: brand.$brand-radius-lg;
+  box-shadow: brand.$brand-shadow-lg;
+  padding: clamp(1.6rem, 4vw, 2.5rem);
+}
+
+[data-bs-theme="dark"] .ns-auth__card {
+  background: #24091f;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.ns-auth__brand {
+  text-align: center;
+  margin-bottom: 1.6rem;
+
+  img {
+    max-height: 46px;
+    width: auto;
+    margin-bottom: 0.9rem;
+  }
+}
+
+.ns-auth__title {
+  font-family: brand.$font-heading;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  text-align: center;
+}
+
+.ns-auth__sub {
+  text-align: center;
+  color: brand.$brand-grey;
+  font-size: 0.94rem;
+  margin-bottom: 1.6rem;
+}
+
+[data-bs-theme="dark"] .ns-auth__sub {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.ns-auth__card {
+  .form-control {
+    border-radius: brand.$brand-radius-sm;
+    border: 1px solid rgba(brand.$brand-navy, 0.16);
+
+    &:focus {
+      border-color: brand.$brand-orange;
+      box-shadow: 0 0 0 0.2rem rgba(brand.$brand-orange, 0.18);
+    }
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+.ns-auth__footer {
+  margin-top: 1.4rem;
+  text-align: center;
+  font-size: 0.92rem;
+  color: brand.$brand-grey;
+
+  a {
+    font-weight: 600;
+  }
+}
+
+[data-bs-theme="dark"] .ns-auth__footer {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.ns-auth__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.35rem 0;
+  color: rgba(brand.$brand-grey, 0.7);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(brand.$brand-navy, 0.12);
+  }
+}

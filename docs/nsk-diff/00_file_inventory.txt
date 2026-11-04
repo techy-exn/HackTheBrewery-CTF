@@ -1,0 +1,35 @@
+# NSK-CTF vs CTFd 3.7.7 – file inventory (git blob-hash comparison; __pycache__/.DS_Store/node_modules ignored)
+## Root
+MODIF   .dockerignore .gitattributes Dockerfile Makefile README.md docker-compose.yml requirements.in requirements.txt
+SAME    docker-entrypoint.sh export.py import.py manage.py ping.py serve.py wsgi.py
+DIFF?   conf/ (tree differs)  migrations/ (adds n5001workshop_add_order_id_to_challenges.py, n5002workshop_add_cooldown_to_challenges.py)
+ADDED   commands.md data/ ztna-workshop/ infrastructure/
+REMOVED tests/ scripts/ populate.py prepare.sh Vagrantfile CHANGELOG.md CONTRIBUTING.md LICENSE SECURITY.md babel.cfg crowdin.yml development.txt linting.txt messages.pot setup.cfg .github .eslintrc.js .flaskenv .isort.cfg .prettierignore .gitignore .codecov.yml
+## CTFd (python)
+MODIF   CTFd/__init__.py CTFd/views.py
+MODIF   CTFd/admin/submissions.py
+MODIF   CTFd/api/v1/challenges.py CTFd/api/v1/flags.py CTFd/api/v1/hints.py CTFd/api/v1/submissions.py CTFd/api/v1/users.py
+MODIF   CTFd/cache/__init__.py CTFd/cli/__init__.py CTFd/constants/themes.py
+MODIF   CTFd/forms/auth.py CTFd/forms/config.py
+MODIF   CTFd/models/__init__.py
+MODIF   CTFd/plugins/flags/__init__.py
+ADDED   CTFd/plugins/flags/assets/choice/{create,edit}.html CTFd/plugins/flags/assets/manual/{create,edit}.html
+REMOVED CTFd/plugins/dynamic_challenges/README.md
+MODIF   CTFd/schemas/submissions.py
+MODIF   CTFd/utils/challenges/__init__.py CTFd/utils/initialization/__init__.py CTFd/utils/scores/__init__.py CTFd/utils/security/sanitize.py CTFd/utils/uploads/uploaders.py
+ADDED   CTFd/utils/content/__init__.py   (data/ markdown loader)
+ADDED   CTFd/logs/*.log (runtime logs committed)
+REMOVED CTFd/translations/  CTFd/themes/core/ (legacy theme)
+## Admin theme (CTFd/themes/admin)
+MODIF   assets/css/challenge-board.scss assets/css/main.scss assets/js/components/hints/HintCreationForm.vue vite.config.js
+MODIF   templates/base.html templates/challenges/challenge.html templates/config.html templates/scoreboard/standings.html templates/scoreboard/users.html
+ADDED   templates/configs/challenges.html templates/review.html  (node_modules/ committed)
+REMOVED templates/configs/{email,legal,localization,mlc,robots,sanitize,social}.html templates/integrations.html
+MODIF   static/ (compiled output)
+## Student theme (CTFd/themes/core-beta)
+MODIF   package.json vite.config.js yarn.lock   ADDED package-lock.json
+MODIF   templates/base.html challenge.html challenges.html components/navbar.html login.html register.html setup.html
+ADDED   templates/index.html
+MODIF   assets/js/challenges.js assets/js/setup.js assets/scss/main.scss
+ADDED   assets/scss/includes/_brand.scss components/_auth.scss components/_board.scss components/_hero.scss components/_mcq.scss
+ADDED   static/workshop.css ; static/ recompiled

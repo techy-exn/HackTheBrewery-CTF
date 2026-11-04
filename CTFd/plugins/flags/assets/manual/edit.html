@@ -1,0 +1,22 @@
+<label>
+	Requires approval<br>
+	<small>
+		The student's answer is not checked automatically. It is placed in the
+		review queue and an administrator approves or rejects it. Points are
+		awarded on approval.
+	</small>
+</label>
+<div class="form-group">
+	<input type="text" class="form-control" name="content" value="{{ content }}"
+		placeholder="Optional note for reviewers (e.g. the expected answer)">
+	<small class="form-text text-muted">
+		Optional. Shown to administrators in the review queue as guidance.
+	</small>
+</div>
+<input type="hidden" name="data" value="">
+<input type="hidden" name="type" value="manual">
+<input type="hidden" name="id" value="{{ id }}">
+<hr>
+<div class="form-group">
+	<button class="btn btn-success float-right">Update</button>
+</div>

@@ -1,0 +1,96 @@
+# Hack the Brewery (Exclusive Networks) - deployment
+#
+#   cp .env.example .env         # set SECRET_KEY (and STUDENT_PASSWORD)
+#   docker compose up -d --build
+#   docker compose exec app python manage.py sync-content
+#
+# Then open http://localhost:81  (production: http://ctf.exn.be:81)
+
+services:
+  app:
+    build: .
+    restart: always
+    environment:
+      # Set this to a long random string for a real deployment.
+      # Generate one with: python -c "import secrets;print(secrets.token_hex(32))"
+      - SECRET_KEY=${SECRET_KEY:?Set SECRET_KEY in .env - see .env.example}
+      - STUDENT_PASSWORD=${STUDENT_PASSWORD:-}
+      - UPLOAD_FOLDER=/var/uploads
+      - DATABASE_URL=mysql+pymysql://ctfd:ctfd@db/ctfd
+      - REDIS_URL=redis://cache:6379
+      - WORKERS=1
+      - LOG_FOLDER=/var/log/CTFd
+      - ACCESS_LOG=-
+      - ERROR_LOG=-
+      - REVERSE_PROXY=true
+    volumes:
+      - uploads:/var/uploads
+      - logs:/var/log/CTFd
+      # Workshop content: challenges, pages and images are read from here,
+      # so edits on the host are picked up by `manage.py sync-content`.
+      - ./data:/opt/CTFd/data:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      default:
+      internal:
+
+  nginx:
+    image: nginx:stable-alpine
+    restart: always
+    volumes:
+      - ./conf/nginx/http.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "${HTTP_PORT:-81}:80"
+    depends_on:
+      - app
+    networks:
+      default:
+
+  db:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=ctfd
+      - MARIADB_USER=ctfd
+      - MARIADB_PASSWORD=ctfd
+      - MARIADB_DATABASE=ctfd
+      - MARIADB_AUTO_UPGRADE=1
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      internal:
+    command:
+      [
+        mysqld,
+        --character-set-server=utf8mb4,
+        --collation-server=utf8mb4_unicode_ci,
+        --wait_timeout=28800,
+        --log-warnings=0,
+      ]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  cache:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - redis:/data
+    networks:
+      internal:
+
+networks:
+  default:
+  internal:
+    internal: true
+
+volumes:
+  uploads:
+  logs:
+  mysql:
+  redis:

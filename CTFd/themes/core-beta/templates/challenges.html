@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+  {{ super() }}
+  {# Width of the challenge window. Kept inline so it applies even when the
+     compiled theme or workshop.css is stale or cached. Change 1400px here. #}
+  <style>
+    #challenge-window .modal-dialog {
+      max-width: min(1400px, 94vw) !important;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <section class="ns-page-head">
+    <div class="container">
+      <h1 class="ns-page-head__title">{% trans %}Challenges{% endtrans %}</h1>
+      <p class="ns-page-head__sub">
+        Work from the top down &mdash; the next activity is always first.
+      </p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        {% include "components/errors.html" %}
+      </div>
+    </div>
+
+    <div
+      x-data="ChallengeBoard"
+      @load-challenges.window="loadChallenges()"
+      @load-challenge.window="loadChallenge($event.detail)"
+    >
+      <div
+          x-ref="challengeWindow" id="challenge-window" class="modal fade" tabindex="-1" role="dialog" x-data=""
+          x-html="$store.challenge.data.view"
+      ></div>
+
+      <div x-show="!loaded">
+        <div class="min-vh-50 d-flex align-items-center">
+          <div class="text-center w-100">
+            <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
+          </div>
+        </div>
+      </div>
+
+      <div x-show="loaded">
+        <template x-if="challenges.length === 0">
+          <div class="text-center py-5">
+            <i class="fas fa-flag fa-2x text-muted mb-3"></i>
+            <p class="text-muted">No challenges are available yet.</p>
+          </div>
+        </template>
+
+        <template x-for="(category, idx) in getCategories()" :key="idx">
+          <div class="ns-category">
+            <div class="ns-category__header">
+              <h3 class="ns-category__title" x-text="category"></h3>
+              <span class="ns-category__count"
+                    x-text="getSolvedCount(category) + '/' + getChallenges(category).length"></span>
+            </div>
+
+            <div class="ns-challenge-grid">
+              <template x-for="(c, idx) in getChallenges(category)" :key="c.id">
+                <button
+                    class="ns-tile"
+                    :class="{
+                      'ns-tile--solved': c.solved_by_me,
+                      'ns-tile--pending': c.pending_review && !c.solved_by_me && !c.locked,
+                      'ns-tile--locked': c.locked
+                    }"
+                    :value="c.id"
+                    :disabled="c.locked"
+                    :aria-disabled="c.locked"
+                    :title="c.locked ? 'Locked - solve the listed activity first' : null"
+                    @click="!c.locked && loadChallenge(c.id)"
+                >
+                  <span class="ns-tile__status">
+                    <template x-if="c.locked">
+                      <i class="fas fa-lock"></i>
+                    </template>
+                    <template x-if="!c.locked && c.solved_by_me">
+                      <i class="fas fa-circle-check"></i>
+                    </template>
+                    <template x-if="!c.locked && c.pending_review && !c.solved_by_me">
+                      <i class="fas fa-hourglass-half"></i>
+                    </template>
+                  </span>
+
+                  <span class="ns-tile__name" x-text="c.name"></span>
+
+                  <template x-if="c.locked && c.requires && c.requires.length">
+                    <span class="ns-tile__requires">
+                      <i class="fas fa-arrow-turn-up ns-tile__requires-icon"></i>
+                      First solve
+                      <strong x-text="c.requires.join(', ')"></strong>
+                    </span>
+                  </template>
+
+                  <span class="ns-tile__meta">
+                    <template x-if="c.locked">
+                      <span class="ns-tile__locked-label">Locked</span>
+                    </template>
+                    <template x-if="!c.locked">
+                      <span class="ns-tile__value" x-text="c.value + ' pts'"></span>
+                    </template>
+                    <template x-if="!c.locked && c.pending_review && !c.solved_by_me">
+                      <span class="ns-tile__pending-label">In review</span>
+                    </template>
+                  </span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ Assets.js("assets/js/challenges.js") }}
+{% endblock %}

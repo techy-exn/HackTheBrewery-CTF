@@ -1,0 +1,215 @@
+// ---------------------------------------------------------------------
+//  Multiple-choice questions and the review/approval workflow
+// ---------------------------------------------------------------------
+@use "../brand" as brand;
+
+// --- Multiple choice options -----------------------------------------
+.ns-choices {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.ns-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid rgba(brand.$brand-navy, 0.14);
+  border-radius: brand.$brand-radius-sm;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+
+  &:hover {
+    border-color: brand.$brand-orange;
+    background: rgba(brand.$brand-orange, 0.04);
+  }
+
+  input {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    accent-color: brand.$brand-orange;
+  }
+
+  // Selected state is driven by the input's own :checked state so the option
+  // text never has to be interpolated into a JavaScript expression.
+  &:has(input:checked),
+  &.is-selected {
+    border-color: brand.$brand-orange;
+    background: rgba(brand.$brand-orange, 0.08);
+  }
+
+  &__label {
+    flex: 1;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+}
+
+[data-bs-theme="dark"] .ns-choice {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.14);
+
+  &:has(input:checked),
+  &.is-selected {
+    background: rgba(brand.$brand-orange, 0.16);
+    border-color: brand.$brand-orange;
+  }
+}
+
+// --- Status banners (pending / approved / rejected) -------------------
+.ns-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: brand.$brand-radius-sm;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  border-left: 4px solid transparent;
+  margin-bottom: 1rem;
+
+  &__icon {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    font-size: 1.05rem;
+  }
+
+  &--pending {
+    background: rgba(brand.$brand-pending, 0.1);
+    border-left-color: brand.$brand-pending;
+    color: brand.$brand-pending;
+  }
+
+  &--approved {
+    background: rgba(brand.$brand-success, 0.1);
+    border-left-color: brand.$brand-success;
+    color: brand.$brand-success;
+  }
+
+  &--rejected {
+    background: rgba(brand.$brand-danger, 0.1);
+    border-left-color: brand.$brand-danger;
+    color: brand.$brand-danger;
+  }
+
+  &--locked {
+    background: rgba(brand.$brand-grey, 0.1);
+    border-left-color: brand.$brand-grey;
+    color: brand.$brand-grey;
+  }
+}
+
+// Badge shown on a challenge tile awaiting review.
+.ns-badge-pending {
+  background: brand.$brand-pending !important;
+  color: #fff !important;
+}
+
+// Pulsing dot for the "awaiting review" state.
+.ns-review-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: brand.$brand-pending;
+  animation: ns-review-blink 1.6s ease-in-out infinite;
+}
+
+@keyframes ns-review-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+// --- Admin review queue ----------------------------------------------
+.ns-review-row {
+  &--pending {
+    background: rgba(brand.$brand-pending, 0.05);
+  }
+}
+
+.ns-review-answer {
+  font-family: brand.$font-mono;
+  font-size: 0.9rem;
+  background: rgba(brand.$brand-navy, 0.05);
+  padding: 0.5rem 0.7rem;
+  border-radius: brand.$brand-radius-sm;
+  display: block;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  max-width: 100%;
+}
+
+[data-bs-theme="dark"] .ns-review-answer {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+// ---------------------------------------------------------------------
+//  Anti-guessing wait shown after a wrong answer
+// ---------------------------------------------------------------------
+.ns-cooldown {
+  border: 1px solid rgba(brand.$brand-warning, 0.45);
+  background: rgba(brand.$brand-warning, 0.1);
+  border-radius: brand.$brand-radius-sm;
+  padding: 0.75rem 0.9rem;
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #7a4b00;
+
+    i {
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+    }
+  }
+
+  &__track {
+    margin-top: 0.6rem;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(brand.$brand-warning, 0.28);
+    overflow: hidden;
+  }
+
+  &__bar {
+    height: 100%;
+    border-radius: 999px;
+    background: brand.$brand-warning;
+    transition: width 1s linear;
+  }
+}
+
+[data-bs-theme="dark"] .ns-cooldown {
+  background: rgba(brand.$brand-warning, 0.14);
+  border-color: rgba(brand.$brand-warning, 0.4);
+
+  .ns-cooldown__row {
+    color: #ffd79a;
+  }
+}
+
+// A disabled option must not look clickable while the wait runs.
+.ns-choice:has(input:disabled) {
+  opacity: 0.55;
+  cursor: not-allowed;
+
+  &:hover {
+    border-color: rgba(brand.$brand-navy, 0.14);
+    background: #fff;
+  }
+}
+
+[data-bs-theme="dark"] .ns-choice:has(input:disabled):hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}

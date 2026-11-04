@@ -1,0 +1,39 @@
+# Build tooling - the compiled theme assets in themes/*/static/ are what ship,
+# never the node_modules used to produce them.
+**/node_modules
+**/.vite
+**/yarn-error.log
+**/npm-debug.log
+
+# Local state
+.data
+*.db
+*.sqlite
+*.sqlite3
+.ctfd_secret_key
+CTFd/uploads/*
+CTFd/logs/*
+
+# Python caches
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.ruff_cache
+.venv
+venv
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+
+# VCS
+.git
+.gitignore
+.gitattributes
+
+# Scratch
+_preview
+_render_*.html
+*.tgz

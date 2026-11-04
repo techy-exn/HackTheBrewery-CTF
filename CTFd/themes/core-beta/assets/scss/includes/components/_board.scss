@@ -1,0 +1,538 @@
+// ---------------------------------------------------------------------
+//  Page headers, challenge categories and challenge tiles
+// ---------------------------------------------------------------------
+@use "sass:color";
+@use "../brand" as brand;
+
+// --- Page header (replaces the old jumbotron) ------------------------
+.ns-page-head {
+  background: brand.$brand-navy;
+  color: #fff;
+  padding: clamp(1.75rem, 5vw, 3rem) 0;
+  margin-bottom: 0.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -60%;
+    right: -10%;
+    width: 28rem;
+    height: 28rem;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(brand.$brand-orange, 0.22) 0%,
+      rgba(brand.$brand-orange, 0) 70%
+    );
+    pointer-events: none;
+  }
+
+  &__title {
+    font-family: brand.$font-heading;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    margin: 0;
+    position: relative;
+  }
+
+  &__sub {
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0.4rem 0 0;
+    font-size: 0.98rem;
+    position: relative;
+  }
+}
+
+// --- Category blocks -------------------------------------------------
+.ns-category {
+  padding-top: 2.25rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(brand.$brand-navy, 0.1);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.1rem;
+  }
+
+  &__title {
+    font-family: brand.$font-heading;
+    font-weight: 700;
+    font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+    margin: 0;
+    position: relative;
+    padding-left: 0.85rem;
+    overflow-wrap: anywhere;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.15em;
+      bottom: 0.15em;
+      width: 4px;
+      border-radius: 2px;
+      background: brand.$brand-orange;
+    }
+  }
+
+  &__count {
+    flex-shrink: 0;
+    font-family: brand.$font-mono;
+    font-size: 0.82rem;
+    color: brand.$brand-grey;
+    background: rgba(brand.$brand-navy, 0.06);
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
+  }
+}
+
+[data-bs-theme="dark"] .ns-category {
+  &__header {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+  }
+
+  &__count {
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+// --- Challenge tiles -------------------------------------------------
+.ns-challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr));
+  gap: 1rem;
+}
+
+.ns-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-height: 7.5rem;
+  padding: 1.1rem 1.15rem;
+  text-align: left;
+  background: #fff;
+  border: 1px solid rgba(brand.$brand-navy, 0.12);
+  border-left: 3px solid rgba(brand.$brand-navy, 0.25);
+  border-radius: brand.$brand-radius;
+  box-shadow: brand.$brand-shadow;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    border-color 0.14s ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-3px);
+    border-left-color: brand.$brand-orange;
+    box-shadow: brand.$brand-shadow-lg;
+    outline: none;
+  }
+
+  &__name {
+    font-family: brand.$font-heading;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.35;
+    // Long activity names must wrap rather than overflow the tile.
+    overflow-wrap: anywhere;
+    padding-right: 1.5rem;
+  }
+
+  &__meta {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  &__value {
+    font-family: brand.$font-mono;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: brand.$brand-orange;
+  }
+
+  &__status {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.9rem;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  &__pending-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #fff;
+    background: brand.$brand-pending;
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+  }
+
+  // Solved
+  &--solved {
+    border-left-color: brand.$brand-success;
+    background: rgba(brand.$brand-success, 0.06);
+
+    .ns-tile__status {
+      color: brand.$brand-success;
+    }
+  }
+
+  // Locked behind a prerequisite: visible, but not enterable.
+  &--locked {
+    border-left-color: rgba(brand.$brand-grey, 0.5);
+    background: rgba(brand.$brand-grey, 0.05);
+    cursor: not-allowed;
+    box-shadow: none;
+
+    .ns-tile__name {
+      color: brand.$brand-grey;
+    }
+
+    .ns-tile__status {
+      color: brand.$brand-grey;
+    }
+
+    // Locked tiles must not invite a click.
+    &:hover,
+    &:focus-visible {
+      transform: none;
+      border-left-color: rgba(brand.$brand-grey, 0.5);
+      box-shadow: none;
+    }
+  }
+
+  &__locked-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #fff;
+    background: brand.$brand-grey;
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+  }
+
+  &__requires {
+    display: block;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: brand.$brand-grey;
+    overflow-wrap: anywhere;
+
+    strong {
+      color: brand.$brand-navy;
+    }
+  }
+
+  &__requires-icon {
+    opacity: 0.6;
+    margin-right: 0.2rem;
+  }
+
+  // Awaiting approval
+  &--pending {
+    border-left-color: brand.$brand-pending;
+    background: rgba(brand.$brand-pending, 0.06);
+
+    .ns-tile__status {
+      color: brand.$brand-pending;
+    }
+  }
+}
+
+[data-bs-theme="dark"] .ns-tile {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  border-left-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+
+  &:hover,
+  &:focus-visible {
+    border-left-color: brand.$brand-orange;
+  }
+
+  &--solved {
+    background: rgba(brand.$brand-success, 0.14);
+    border-left-color: brand.$brand-success;
+  }
+
+  &--pending {
+    background: rgba(brand.$brand-pending, 0.16);
+    border-left-color: brand.$brand-pending;
+  }
+
+  &--locked {
+    background: rgba(255, 255, 255, 0.03);
+    border-left-color: rgba(255, 255, 255, 0.25);
+
+    .ns-tile__name,
+    .ns-tile__status {
+      color: rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  .ns-tile__requires {
+    color: rgba(255, 255, 255, 0.6);
+
+    strong {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+}
+
+// --- Challenge modal readability on small screens --------------------
+.challenge-desc {
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: brand.$brand-radius-sm;
+    border: 1px solid rgba(brand.$brand-navy, 0.12);
+    margin: 0.6rem 0;
+  }
+
+  pre,
+  code {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  pre {
+    overflow-x: auto;
+    padding: 0.85rem 1rem;
+    border-radius: brand.$brand-radius-sm;
+    background: rgba(brand.$brand-navy, 0.05);
+  }
+
+  // Wide tables (the inventory sheet, for example) scroll instead of
+  // stretching the modal off-screen.
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid rgba(brand.$brand-navy, 0.15);
+    vertical-align: top;
+  }
+}
+
+[data-bs-theme="dark"] .challenge-desc {
+  pre {
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  th,
+  td {
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+}
+
+// The workshop content uses these blocks to frame the exercise.
+.challenge-container,
+.attacker-container,
+.defender-container {
+  border-radius: brand.$brand-radius;
+  padding: 1.1rem 1.2rem 0.9rem;
+  margin: 1.25rem 0;
+  border: 1px solid rgba(brand.$brand-navy, 0.12);
+  background: rgba(brand.$brand-navy, 0.03);
+}
+
+.challenge-container {
+  border-color: rgba(brand.$brand-orange, 0.4);
+  background: rgba(brand.$brand-orange, 0.06);
+}
+
+.challenge-label,
+.attacker-label,
+.defender-label {
+  display: inline-block;
+  font-family: brand.$font-mono;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.7rem;
+  color: #fff;
+  background: brand.$brand-navy;
+}
+
+.challenge-label {
+  background: brand.$brand-orange;
+}
+
+.attacker-label {
+  background: brand.$brand-danger;
+}
+
+.defender-label {
+  background: brand.$brand-success;
+}
+
+[data-bs-theme="dark"] {
+  .challenge-container,
+  .attacker-container,
+  .defender-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .challenge-container {
+    background: rgba(brand.$brand-orange, 0.12);
+    border-color: rgba(brand.$brand-orange, 0.35);
+  }
+}
+
+// Keep the challenge modal usable on phones.
+@media (max-width: 575.98px) {
+  .modal-body {
+    padding: 1.15rem !important;
+  }
+
+  .challenge-name {
+    font-size: 1.35rem;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+// --- Hints ------------------------------------------------------------
+// Each hint is a collapsible card. Locked hints show their point cost; the
+// body reuses .challenge-desc so screenshots and code read like the task.
+.challenge-hints {
+  margin: 1.5rem 0 1rem;
+}
+
+.ns-hints__heading {
+  font-family: brand.$font-mono;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: brand.$brand-orange;
+  margin-bottom: 0.6rem;
+}
+
+.ns-hint {
+  margin-bottom: 0.6rem;
+
+  details {
+    border: 1px solid rgba(brand.$brand-navy, 0.14);
+    border-left: 4px solid brand.$brand-orange;
+    border-radius: brand.$brand-radius;
+    background: rgba(brand.$brand-navy, 0.02);
+    overflow: hidden;
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: "\25B8";
+      color: brand.$brand-orange;
+      transition: transform 0.15s ease;
+    }
+
+    &:hover {
+      background: rgba(brand.$brand-orange, 0.06);
+    }
+  }
+
+  details[open] > summary {
+    border-bottom: 1px solid rgba(brand.$brand-navy, 0.1);
+
+    &::before {
+      transform: rotate(90deg);
+    }
+  }
+
+  .ns-hint__title {
+    flex: 1;
+  }
+
+  .ns-hint__cost {
+    flex-shrink: 0;
+    font-family: brand.$font-mono;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    color: brand.$brand-orange;
+    background: rgba(brand.$brand-orange, 0.12);
+  }
+
+  .ns-hint__cost--free {
+    color: #1f8a4c;
+    background: rgba(#1f8a4c, 0.12);
+  }
+
+  .ns-hint__body {
+    padding: 1rem 1.2rem 0.6rem;
+
+    &:empty {
+      display: none;
+    }
+
+    // Numbered steps are the usual shape of a walkthrough hint.
+    ol > li,
+    ul > li {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+[data-bs-theme="dark"] .ns-hint {
+  details {
+    border-color: rgba(255, 255, 255, 0.14);
+    border-left-color: brand.$brand-orange;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  details[open] > summary {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .ns-hint__cost--free {
+    color: #5fd38d;
+    background: rgba(#5fd38d, 0.14);
+  }
+}

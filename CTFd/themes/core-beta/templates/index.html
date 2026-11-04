@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+{#
+  The home page text lives in data/Home.md and is published with
+  `manage.py sync-content` (or edited under Admin > Pages > index).
+  Every "<!-- buttons -->" line in it is replaced by the buttons below.
+  Until that page has content, the built-in welcome screen further down is shown.
+#}
+
+{% macro home_buttons() %}
+  {% if authed() %}
+    <a href="{{ url_for('challenges.listing') }}" class="btn ns-btn-hero">
+      <i class="fas fa-play pe-2"></i>Start the workshop
+    </a>
+    <a href="{{ url_for('scoreboard.listing') }}" class="btn ns-btn-ghost">
+      <i class="fas fa-ranking-star pe-2"></i>Scoreboard
+    </a>
+  {% else %}
+    {% if registration_visible() %}
+      <a href="{{ url_for('auth.register') }}" class="btn ns-btn-hero">
+        <i class="fas fa-user-plus pe-2"></i>Create your account
+      </a>
+      <a href="{{ url_for('auth.login') }}" class="btn ns-btn-ghost">
+        <i class="fas fa-sign-in-alt pe-2"></i>I already have an account
+      </a>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}" class="btn ns-btn-hero">
+        <i class="fas fa-sign-in-alt pe-2"></i>Sign in to start
+      </a>
+    {% endif %}
+  {% endif %}
+{% endmacro %}
+
+{% if page and page.content and page.content.strip() %}
+
+  {% for part in page.html.split("<!-- buttons -->") %}
+    {{ part | safe }}
+    {% if not loop.last %}{{ home_buttons() }}{% endif %}
+  {% endfor %}
+
+{% else %}
+
+
+<section class="ns-hero">
+  <div class="container">
+    <div class="ns-hero__eyebrow">
+      <span class="ns-pulse"></span>
+      OT/IT Red &amp; Blue Teaming &middot; Hands-on Lab
+    </div>
+
+    <h1 class="ns-hero__title">
+      {% if Configs.ctf_name and Configs.ctf_name != "CTFd" %}
+        {{ Configs.ctf_name }}
+      {% else %}
+        Hack the <span class="ns-accent">Brewery</span>
+      {% endif %}
+    </h1>
+
+    <p class="ns-hero__lead">
+      A brewery's production line is under attack. Play the attacker, from the first foothold
+      in IT to a stopped PLC on the brewing floor, then switch sides and detect, contain and
+      recover with Fortinet, Nozomi Networks and EDR. Each step ends with a question that proves you did it.
+    </p>
+
+    <div class="ns-hero__actions">
+      {% if authed() %}
+        <a href="{{ url_for('challenges.listing') }}" class="btn ns-btn-hero">
+          <i class="fas fa-play pe-2"></i>Start the workshop
+        </a>
+        <a href="{{ url_for('scoreboard.listing') }}" class="btn ns-btn-ghost">
+          <i class="fas fa-ranking-star pe-2"></i>Scoreboard
+        </a>
+      {% else %}
+        {% if registration_visible() %}
+          <a href="{{ url_for('auth.register') }}" class="btn ns-btn-hero">
+            <i class="fas fa-user-plus pe-2"></i>Create your account
+          </a>
+          <a href="{{ url_for('auth.login') }}" class="btn ns-btn-ghost">
+            <i class="fas fa-sign-in-alt pe-2"></i>I already have an account
+          </a>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}" class="btn ns-btn-hero">
+            <i class="fas fa-sign-in-alt pe-2"></i>Sign in to start
+          </a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="ns-section">
+  <div class="container">
+    <div class="ns-feature-grid">
+
+      <div class="ns-feature">
+        <div class="ns-feature__icon"><i class="fas fa-user-secret"></i></div>
+        <div class="ns-feature__title">Red team: IT to OT</div>
+        <p class="ns-feature__text">
+          Gain a foothold, escalate privileges and move laterally until you reach the engineering workstation.
+        </p>
+      </div>
+
+      <div class="ns-feature">
+        <div class="ns-feature__icon"><i class="fas fa-industry"></i></div>
+        <div class="ns-feature__title">Hack the PLC</div>
+        <p class="ns-feature__text">
+          Use the engineering tools to change and stop a real PLC and see the impact on the process.
+        </p>
+      </div>
+
+      <div class="ns-feature">
+        <div class="ns-feature__icon"><i class="fas fa-shield-halved"></i></div>
+        <div class="ns-feature__title">Blue team: detect and respond</div>
+        <p class="ns-feature__text">
+          Spot the attack with EDR and Nozomi Networks Guardian, and trap the attacker with deception.
+        </p>
+      </div>
+
+      <div class="ns-feature">
+        <div class="ns-feature__icon"><i class="fas fa-key"></i></div>
+        <div class="ns-feature__title">Secure remote access</div>
+        <p class="ns-feature__text">
+          Lock down privileged and remote access to OT with FortiPAM and FortiSRA, with recording and approval.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="ns-section pt-0">
+  <div class="container text-center">
+    <h2 class="ns-section__title">Ready when you are</h2>
+    <p class="ns-section__sub">
+      Activities are ordered so the next one is always at the top of the list.
+      Work through the attack and the defence at your own pace.
+    </p>
+    {% if authed() %}
+      <a href="{{ url_for('challenges.listing') }}" class="btn ns-btn-hero">
+        <i class="fas fa-flag-checkered pe-2"></i>Go to the challenges
+      </a>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}" class="btn ns-btn-hero">
+        <i class="fas fa-sign-in-alt pe-2"></i>Sign in to start
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,58 @@
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: sans-serif;
+  }
+
+  .bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    background: black;
+  }
+
+  .center-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2em 3em;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  }
+
+  .start-link {
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.75em 1.5em;
+    background-color: #1a73e8;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.5s ease;
+    letter-spacing: 2px;
+  }
+
+  .start-link:hover {
+    background-color: #00ff7b;
+    transform: scale(1.10);
+  }
+</style>
+
+<!-- Background image -->
+<img class="bg-image" src="/images/BE_-_2026-03-26_-Blackout-Lockout_PPT-no-date-2.png" alt="Background">
+
+<!-- Centered box with start button -->
+<div class="center-box">
+  <h2>Welcome to the From Blackout to Lockout Workshop</h2>
+  <a class="start-link" href="challenges">CLICK HERE TO START</a>
+</div>

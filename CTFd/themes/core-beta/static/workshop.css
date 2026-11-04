@@ -1,0 +1,20 @@
+/*
+ * =====================================================================
+ *  WORKSHOP TWEAKS - plain CSS, no theme rebuild needed
+ * =====================================================================
+ *  This file is loaded after the compiled theme, so anything here wins.
+ *  Edit, save, run `docker compose up -d --build app`, then hard-refresh
+ *  the browser (Cmd+Shift+R).
+ * =====================================================================
+ */
+
+/* The challenge window width is set in templates/challenges.html. */
+
+/* The submit button keeps readable white text on the purple brand colour
+ * in every state, including the disabled cooldown state. */
+#challenge-window .challenge-submit,
+#challenge-window .challenge-submit:hover,
+#challenge-window .challenge-submit:focus,
+#challenge-window .challenge-submit:disabled {
+  color: #fff;
+}

@@ -1,0 +1,22 @@
+<label>
+	Multiple choice<br>
+	<small>Enter the accepted answer(s). Separate several accepted answers with a pipe: <code>Option A|Option B</code></small>
+</label>
+<div class="form-group">
+	<input type="text" class="form-control" name="content" value="{{ content }}">
+</div>
+<div class="form-group">
+	<select class="form-control custom-select col-md-6" name="data">
+		<option value="">Single answer (radio buttons)</option>
+		<option value="multiple" {% if data == "multiple" %}selected{% endif %}>Several answers required (checkboxes)</option>
+	</select>
+	<small class="form-text text-muted">
+		The options shown to the student are defined on the challenge itself.
+	</small>
+</div>
+<input type="hidden" name="type" value="choice">
+<input type="hidden" name="id" value="{{ id }}">
+<hr>
+<div class="form-group">
+	<button class="btn btn-success float-right">Update</button>
+</div>
