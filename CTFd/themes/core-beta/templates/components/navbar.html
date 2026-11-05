@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
   <div class="container">
     <a href="{{ url_for('views.static_html', route='/') }}" class="navbar-brand">
       {% if Configs.ctf_logo %}
@@ -18,7 +18,7 @@
             height="25"
             style="width:auto"
         >
-        <span class="ms-2 align-middle">{{ Configs.ctf_name }}</span>
+        <span class="ms-2 align-middle htb-brand-name">{{ Configs.ctf_name }}</span>
       {% endif %}
     </a>
 
@@ -70,18 +70,18 @@
         </li>
       </ul>
 
-      <hr class="d-sm-flex d-md-flex d-lg-none">
+      <hr class="d-flex d-xl-none">
 
-      <ul class="navbar-nav ms-md-auto d-block d-sm-flex d-md-flex">
+      <ul class="navbar-nav ms-xl-auto">
         {% if authed() %}
 
           {% if is_admin() %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('admin.view') }}">
                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Admin Panel{% endtrans %}">
-                    <i class="fas fa-wrench d-none d-md-inline d-lg-none"></i>
+                    <i class="fas fa-wrench d-none d-xl-inline"></i>
                 </span>
-                <span class="d-sm-inline d-md-none d-lg-inline">
+                <span class="d-inline d-xl-none">
                   <i class="fas fa-wrench pe-1"></i>
                   {% trans %}Admin Panel{% endtrans %}
                 </span>
@@ -92,9 +92,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('views.notifications') }}">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Notifications{% endtrans %}">
-                <i class="fas fa-bell d-none d-md-inline d-lg-none"></i>
+                <i class="fas fa-bell d-none d-xl-inline"></i>
               </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
+              <span class="d-inline d-xl-none">
                   <i class="fas fa-bell pe-1"></i>
                   <span x-data x-show="$store.unread_count > 0" x-text="$store.unread_count" class="badge rounded-pill bg-danger badge-notification"></span>
                   {% trans %}Notifications{% endtrans %}
@@ -106,9 +106,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('teams.private') }}">
                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Team{% endtrans %}">
-                  <i class="fas fa-users d-none d-md-inline d-lg-none"></i>
+                  <i class="fas fa-users d-none d-xl-inline"></i>
                 </span>
-                <span class="d-sm-inline d-md-none d-lg-inline">
+                <span class="d-inline d-xl-none">
                   <i class="fas fa-users pe-1"></i>
                   {% trans %}Team{% endtrans %}
                 </span>
@@ -119,9 +119,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('users.private') }}">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Profile{% endtrans %}">
-                <i class="fas fa-user-circle d-none d-md-inline d-lg-none"></i>
+                <i class="fas fa-user-circle d-none d-xl-inline"></i>
               </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
+              <span class="d-inline d-xl-none">
                 <i class="fas fa-user-circle pe-1"></i>
                 {% trans %}Profile{% endtrans %}
               </span>
@@ -131,9 +131,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('views.settings') }}">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Settings{% endtrans %}">
-                <i class="fas fa-cogs d-none d-md-inline d-lg-none"></i>
+                <i class="fas fa-cogs d-none d-xl-inline"></i>
               </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
+              <span class="d-inline d-xl-none">
                 <i class="fas fa-cogs pe-1"></i>
                 {% trans %}Settings{% endtrans %}
               </span>
@@ -143,10 +143,10 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('auth.logout') }}">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Logout{% endtrans %}">
-                <i class="fas fa-sign-out-alt d-none d-md-inline d-lg-none"></i>
+                <i class="fas fa-sign-out-alt d-none d-xl-inline"></i>
               </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
-                <i class="fas fa-sign-out-alt pe-1"></i><span class="d-lg-none">
+              <span class="d-inline d-xl-none">
+                <i class="fas fa-sign-out-alt pe-1"></i><span>
                   {% trans %}Logout{% endtrans %}
                 </span>
               </span>
@@ -158,9 +158,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('auth.register') }}">
                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Register{% endtrans %}">
-                  <i class="fas fa-user-plus d-none d-md-inline d-lg-none"></i>
+                  <i class="fas fa-user-plus d-none d-xl-inline"></i>
                 </span>
-                <span class="d-sm-inline d-md-none d-lg-inline">
+                <span class="d-inline d-xl-none">
                   <i class="fas fa-user-plus pe-1"></i>
                   {% trans %}Register{% endtrans %}
                 </span>
@@ -171,9 +171,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('auth.login') }}">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Login{% endtrans %}">
-                <i class="fas fa-sign-in-alt d-none d-md-inline d-lg-none"></i>
+                <i class="fas fa-sign-in-alt d-none d-xl-inline"></i>
               </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
+              <span class="d-inline d-xl-none">
                 <i class="fas fa-sign-in-alt pe-1"></i>
                 {% trans %}Login{% endtrans %}
               </span>
@@ -184,9 +184,9 @@
         <li class="nav-item">
           <button class="nav-link theme-switch" type="button">
             <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Toggle theme{% endtrans %}">
-              <i class="fas fa-sun d-none d-md-inline"></i>
+              <i class="fas fa-sun d-none d-xl-inline"></i>
             </span>
-            <span class="d-sm-inline d-md-none">
+            <span class="d-inline d-xl-none">
               <i class="fas fa-sun pe-1"></i>
               {% trans %}Toggle theme{% endtrans %}
             </span>

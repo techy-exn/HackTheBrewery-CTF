@@ -19,7 +19,7 @@ title: Home
 -->
 
 <style>
-  .htb-logo { height: 34px; width: auto; margin-bottom: 1.5rem; }
+  .htb-logo { display: block; height: 34px; width: auto; margin-bottom: 1.5rem; }
   .ns-journey {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));

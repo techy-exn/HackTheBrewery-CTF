@@ -176,14 +176,39 @@ select {
     }
   }
 
+  // Use the full width on large screens: with the extra page links
+  // (Credentials, IP addresses, Products) the stock 1140/1320px
+  // container is too narrow for one line.
+  > .container {
+    max-width: 1600px;
+  }
+
+  // The CTF name next to the logo only fits on very wide screens.
+  .htb-brand-name {
+    display: none;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 1600px) {
+    .htb-brand-name {
+      display: inline;
+    }
+  }
+
   .nav-link {
     position: relative;
     font-weight: 600;
+    white-space: nowrap;
     transition: color 0.15s ease-in-out;
 
     &:hover,
     &:focus {
       color: brand.$brand-primary !important;
+    }
+
+    @media (min-width: 1200px) {
+      padding-left: 0.6rem;
+      padding-right: 0.6rem;
     }
 
     &.active::after {
