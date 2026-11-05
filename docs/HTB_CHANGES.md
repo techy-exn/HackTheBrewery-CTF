@@ -19,6 +19,7 @@
 ## Fixes and improvements
 - **`setup.js`:** removed the dead newsletter code.
 - **Admin `base.html`:** Bootstrap 4 classes for the review menu item.
+- **Unstyled site after a rebuild:** `CTFd/utils/__init__.py` no longer caches the theme manifest (stale hashed CSS names from Redis caused 404s). `base.html` links `workshop.css` through `themes_beta` so it is no longer rewritten to a missing `workshop.min.css`.
 - **`Dockerfile`:** new `admintheme` stage that runs `yarn build` for the admin theme.
 - **`docker-compose.yml`:**
   - Port `${HTTP_PORT:-81}:80`.
@@ -52,3 +53,18 @@
   - The new `data/Home.md` is the Hack the Brewery landing page.
 - **Images:** 169 images (only the referenced ones) are in `data/images/` under their original names.
   - Two different files shared a name; the second copy is saved with a `-2` suffix and its links point to it.
+
+## UI polish: content pages and copy buttons
+- **Copy buttons** (`assets/js/utils/copy_buttons.js`, loaded on every page):
+  - code blocks get a **Copy** button;
+  - inline `code` is a click-to-copy chip;
+  - works in pages, challenge windows and hints (challenge text loads late, so a MutationObserver picks it up);
+  - works on `http://<ip>`, where `navigator.clipboard` is unavailable, through an `execCommand` fallback.
+- **Content styles** (`assets/scss/includes/components/_content.scss`, used by `.ns-content` and `.challenge-desc`): modern tables, code chips and blocks, callouts for `blockquote` and `.purple`, framed screenshots, and dark mode.
+- **`page.html`** wraps pages in `.ns-page > .ns-content` (spacing under the fixed navbar, max width 1100px).
+- **`_table.scss`:** quieter uppercase column headers on scoreboard, users and teams.
+- **`data/` pages:**
+  - Credentials, IP addresses and Products had their own inline `<style>` (`body { display:flex; height:100vh }`, a hard-coded blue header), which broke the layout. It is removed.
+  - Credentials and IP addresses are rebuilt as clean tables with copyable values.
+  - IP addresses gets an **Open** button per console.
+  - Products loses its `<br>` spacers, legacy table attributes and a stray duplicate `<tr>`.

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
-    {{ content | safe }}
+  <div class="container ns-page">
+    <article class="ns-content">
+      {{ content | safe }}
+    </article>
   </div>
 {% endblock %}
 

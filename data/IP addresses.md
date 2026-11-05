@@ -3,68 +3,38 @@ title: "IP addresses"
 # old route: /Ip addresses
 ---
 
-<style>
-   
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f4f4f4;
-      font-family: Arial, sans-serif;
-    }
+# IP addresses
 
-    table {
-      border-collapse: collapse;
-      width: 95%;
-      max-width: none;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      table-layout: auto; /* Allow columns to grow with content */
-      word-wrap: break-word;
-    }
+> **Tip:** click an address to copy it, or use **Open** to launch the console in a new tab.
 
-    th, td {
-      border: 1px solid #ccc;
-      padding: 12px 15px;
-      text-align: center;
-    }
-
-    th {
-      background-color: #007bff;
-      color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-  </style>
-
-<br>
 <table>
+  <thead>
     <tr>
       <th>Application</th>
-      <th>IP address</th>
+      <th>Address</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>FortiDeceptor</strong></td>
+      <td><code>https://10.60.10.50</code></td>
+      <td><a class="btn btn-sm btn-primary" href="https://10.60.10.50" target="_blank" rel="noopener">Open &#8599;</a></td>
     </tr>
     <tr>
-      <td>FortiDeceptor</td>
-      <td>https://10.60.10.50</td>
+      <td><strong>FortiPAM</strong></td>
+      <td><code>https://10.60.10.40</code></td>
+      <td><a class="btn btn-sm btn-primary" href="https://10.60.10.40" target="_blank" rel="noopener">Open &#8599;</a></td>
     </tr>
     <tr>
-      <td>FortiPAM</td>
-      <td>https://10.60.10.40</td>
+      <td><strong>Guardian</strong></td>
+      <td><code>https://10.60.10.210</code></td>
+      <td><a class="btn btn-sm btn-primary" href="https://10.60.10.210" target="_blank" rel="noopener">Open &#8599;</a></td>
     </tr>
     <tr>
-      <td>Guardian</td>
-      <td>https://10.60.10.210</td>
+      <td><strong>FortiGate OT</strong></td>
+      <td><code>https://10.60.10.2</code></td>
+      <td><a class="btn btn-sm btn-primary" href="https://10.60.10.2" target="_blank" rel="noopener">Open &#8599;</a></td>
     </tr>
-    <tr>
-      <td>FortiGate OT</td>
-      <td>https://10.60.10.2</td>
-    </tr>
-  </table>
+  </tbody>
+</table>

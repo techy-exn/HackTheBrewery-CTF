@@ -1,0 +1,460 @@
+// ---------------------------------------------------------------------
+//  Workshop content: pages (Credentials, IP addresses, Products ...) and
+//  challenge text. Modern tables, code, callouts and copy buttons.
+//
+//  Used by:  .ns-content   (templates/page.html)
+//            .challenge-desc (challenge window, hints)
+//  Copy buttons are added by assets/js/utils/copy_buttons.js.
+// ---------------------------------------------------------------------
+@use "sass:color";
+@use "../brand" as brand;
+
+// Page frame (the navbar is fixed, so leave room under it).
+.ns-page {
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+}
+
+.ns-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+
+  h1 {
+    font-size: clamp(1.7rem, 3vw, 2.2rem);
+    margin: 0 0 1rem;
+
+    // Short brand-coloured underline.
+    &::after {
+      content: "";
+      display: block;
+      width: 3.5rem;
+      height: 4px;
+      border-radius: 2px;
+      margin-top: 0.6rem;
+      background: brand.$brand-orange;
+    }
+  }
+
+  h2 {
+    font-size: 1.45rem;
+    margin: 2.25rem 0 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  hr {
+    margin: 2rem 0;
+    opacity: 1;
+    border-color: rgba(brand.$brand-navy, 0.14);
+  }
+
+  ul,
+  ol {
+    padding-left: 1.4rem;
+  }
+
+  li + li {
+    margin-top: 0.25rem;
+  }
+}
+
+// ---------------------------------------------------------------------
+//  Shared by pages and challenge text
+// ---------------------------------------------------------------------
+.ns-content,
+.challenge-desc {
+  // Images look like screenshots in a frame.
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: brand.$brand-radius-sm;
+    border: 1px solid rgba(brand.$brand-navy, 0.12);
+    box-shadow: brand.$brand-shadow;
+  }
+
+  // Callouts: blockquotes and the legacy <div class="purple"> blocks.
+  blockquote,
+  .purple {
+    margin: 1.25rem 0;
+    padding: 0.85rem 1.1rem;
+    border-radius: brand.$brand-radius;
+    background: rgba(brand.$brand-orange, 0.06);
+    border: 1px solid rgba(brand.$brand-orange, 0.22);
+    border-left: 4px solid brand.$brand-orange;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // ---- Tables ------------------------------------------------------
+  table {
+    width: 100%;
+    margin: 1.25rem 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border: 1px solid rgba(brand.$brand-navy, 0.14);
+    border-radius: brand.$brand-radius;
+    box-shadow: brand.$brand-shadow;
+    font-size: 0.95rem;
+  }
+
+  th,
+  td {
+    padding: 0.7rem 1rem;
+    border: 0;
+    border-bottom: 1px solid rgba(brand.$brand-navy, 0.08);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  th {
+    background: brand.$brand-navy;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-bottom: 0;
+  }
+
+  // Round the header corners (the table itself clips nothing).
+  tr:first-child > th:first-child {
+    border-top-left-radius: calc(#{brand.$brand-radius} - 1px);
+  }
+
+  tr:first-child > th:last-child {
+    border-top-right-radius: calc(#{brand.$brand-radius} - 1px);
+  }
+
+  tr:last-child > td {
+    border-bottom: 0;
+  }
+
+  tbody tr:nth-child(even) > td {
+    background: rgba(brand.$brand-navy, 0.025);
+  }
+
+  tbody tr:hover > td {
+    background: rgba(brand.$brand-orange, 0.07);
+  }
+
+  // ---- Code --------------------------------------------------------
+  // Inline code is a chip.
+  :not(pre) > code {
+    padding: 0.15em 0.45em;
+    border-radius: 0.35rem;
+    font-size: 0.88em;
+    color: color.scale(brand.$brand-orange, $lightness: -8%);
+    background: rgba(brand.$brand-orange, 0.09);
+    border: 1px solid rgba(brand.$brand-orange, 0.18);
+  }
+
+  // Code blocks.
+  pre {
+    margin: 1rem 0;
+    padding: 0.9rem 5.5rem 0.9rem 1rem;
+    border-radius: brand.$brand-radius-sm;
+    background: rgba(brand.$brand-navy, 0.045);
+    border: 1px solid rgba(brand.$brand-navy, 0.12);
+    border-left: 4px solid brand.$brand-orange;
+    font-size: 0.88rem;
+    line-height: 1.55;
+
+    code {
+      padding: 0;
+      background: none;
+      border: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+  }
+}
+
+// Challenge text keeps wide tables scrollable inside the modal.
+.challenge-desc table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// ---------------------------------------------------------------------
+//  Copy buttons
+// ---------------------------------------------------------------------
+
+// A code block with its Copy button.
+.ns-codeblock {
+  position: relative;
+
+  pre {
+    margin: 0;
+  }
+
+  & + p,
+  & + ul,
+  & + ol {
+    margin-top: 1rem;
+  }
+}
+
+.ns-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(brand.$brand-navy, 0.2);
+  background: #fff;
+  color: brand.$brand-navy;
+  font-family: brand.$font-body;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.8;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+    border-color: brand.$brand-orange;
+    color: brand.$brand-orange;
+    outline: none;
+  }
+
+  &.is-copied {
+    opacity: 1;
+    background: brand.$brand-success;
+    border-color: brand.$brand-success;
+    color: #fff;
+  }
+
+  &.is-failed {
+    opacity: 1;
+    background: brand.$brand-warning;
+    border-color: brand.$brand-warning;
+    color: #1a1a1a;
+  }
+}
+
+// Inline copy chips: click to copy; the icon slides in on hover.
+code.ns-copyable {
+  position: relative;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  .ns-copyable__ico {
+    display: inline-block;
+    width: 0;
+    margin-left: 0;
+    overflow: hidden;
+    opacity: 0;
+    font-size: 0.8em;
+    vertical-align: baseline;
+    transition:
+      width 0.15s ease,
+      margin-left 0.15s ease,
+      opacity 0.15s ease;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(brand.$brand-orange, 0.18);
+    border-color: rgba(brand.$brand-orange, 0.45);
+    outline: none;
+
+    .ns-copyable__ico {
+      width: 0.9em;
+      margin-left: 0.4em;
+      opacity: 0.85;
+    }
+  }
+
+  &.is-copied {
+    color: color.scale(brand.$brand-success, $lightness: -25%);
+    background: rgba(brand.$brand-success, 0.16);
+    border-color: rgba(brand.$brand-success, 0.55);
+
+    .ns-copyable__ico {
+      width: 0.9em;
+      margin-left: 0.4em;
+      opacity: 1;
+    }
+
+    // "Copied!" bubble above the chip.
+    &::after {
+      content: "Copied!";
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 6px);
+      transform: translateX(-50%);
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.35rem;
+      background: brand.$brand-navy;
+      color: #fff;
+      font-family: brand.$font-body;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+  }
+
+  &.is-failed {
+    background: rgba(brand.$brand-warning, 0.2);
+    border-color: rgba(brand.$brand-warning, 0.7);
+
+    .ns-copyable__ico {
+      width: 0.9em;
+      margin-left: 0.4em;
+      opacity: 1;
+    }
+  }
+}
+
+// In tables the icon is always visible (these cells hold the values people
+// copy), and the bubble is skipped so it is not clipped by the table.
+.ns-content td code.ns-copyable,
+.challenge-desc td code.ns-copyable {
+  .ns-copyable__ico {
+    width: 0.9em;
+    margin-left: 0.4em;
+    opacity: 0.55;
+  }
+
+  &.is-copied::after {
+    content: none;
+  }
+}
+
+// Touch screens have no hover: always show the icon.
+@media (hover: none) {
+  code.ns-copyable .ns-copyable__ico {
+    width: 0.9em;
+    margin-left: 0.4em;
+    opacity: 0.6;
+  }
+}
+
+// "Open" link buttons used next to addresses on the IP page.
+.ns-content .btn-sm {
+  white-space: nowrap;
+}
+
+// ---------------------------------------------------------------------
+//  Dark mode
+// ---------------------------------------------------------------------
+[data-bs-theme="dark"] {
+  .ns-content,
+  .challenge-desc {
+    img {
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    blockquote,
+    .purple {
+      background: rgba(brand.$brand-orange, 0.14);
+      border-color: rgba(brand.$brand-orange, 0.35);
+      border-left-color: brand.$brand-orange;
+    }
+
+    table {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    th,
+    td {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    tbody tr:nth-child(even) > td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    tbody tr:hover > td {
+      background: rgba(brand.$brand-orange, 0.16);
+    }
+
+    :not(pre) > code {
+      color: brand.$brand-accent-on-dark;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.12);
+      border-left-color: brand.$brand-orange;
+    }
+  }
+
+  .ns-content hr {
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+
+  .ns-copy-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #fff;
+
+    &:hover,
+    &:focus-visible {
+      border-color: brand.$brand-accent-on-dark;
+      color: brand.$brand-accent-on-dark;
+    }
+
+    &.is-copied {
+      background: brand.$brand-success;
+      border-color: brand.$brand-success;
+      color: #fff;
+    }
+
+    &.is-failed {
+      background: brand.$brand-warning;
+      border-color: brand.$brand-warning;
+      color: #1a1a1a;
+    }
+  }
+
+  code.ns-copyable {
+    &:hover,
+    &:focus-visible {
+      background: rgba(brand.$brand-orange, 0.3);
+      border-color: rgba(brand.$brand-orange, 0.6);
+    }
+
+    &.is-copied {
+      color: #fff;
+      background: rgba(brand.$brand-success, 0.35);
+      border-color: rgba(brand.$brand-success, 0.7);
+
+      &::after {
+        background: #fff;
+        color: brand.$brand-navy;
+      }
+    }
+  }
+}

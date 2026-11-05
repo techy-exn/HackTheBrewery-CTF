@@ -253,6 +253,23 @@ straight from disk at `/images/<filename>` and cached by the browser for a day.
 > Legacy `/files/<hash>/name.jpg` URLs from the old upload system are rewritten
 > to `/images/name.jpg` automatically on import, matching by filename.
 
+### Copy buttons
+
+Every code block gets a **Copy** button, and every piece of inline code is a click-to-copy chip
+(on hover it shows a copy icon, and it turns green with "Copied!" once copied). So put anything
+a participant has to type or paste in backticks:
+
+```markdown
+Log in as `it-admin` with password `OTworkshop123!`, then run:
+
+    nslookup dc-it-01.exn.local
+```
+
+This also works on plain `http://<ip>` servers, where browsers block the normal clipboard API:
+the theme falls back to an older copy method. Tables get the same look (header row, zebra rows,
+hover), so use a normal HTML or Markdown table for credential and address lists. Do not add your
+own `<style>` blocks with `body { ... }` rules to pages, they override the theme.
+
 ### Front matter reference
 
 An optional block at the very top of a file sets metadata. Every key is

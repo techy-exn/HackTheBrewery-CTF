@@ -10,7 +10,8 @@
 
   {% block stylesheets %}
     {{ Assets.css("assets/scss/main.scss") }}
-    <link rel="stylesheet" href="{{ url_for('views.themes', path='workshop.css') }}">
+    {# themes_beta, not themes: url_for('views.themes') rewrites .css to .min.css, which does not exist for this hand-written file #}
+    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='core-beta', path='workshop.css') }}">
   {% endblock %}
 
   {{ Plugins.styles }}

@@ -20,3 +20,11 @@
 .table > thead > th {
   white-space: nowrap;
 }
+
+// Quieter, more modern column headers (scoreboard, users, teams).
+.table > thead > tr > th {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ns-grey, #5b6770);
+}

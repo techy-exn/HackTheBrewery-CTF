@@ -35,6 +35,8 @@ over as-is. This document is the checklist that every changed file was reviewed.
 | Admin "Awaiting review" menu used Bootstrap 5 classes in a Bootstrap 4 theme | **Fixed** |
 | Admin theme was not compiled in Docker, so admin colours went stale | **Fixed** (new `admintheme` build stage) |
 | `.gitattributes` lost `*.sh eol=lf`, so the entrypoint could break on Windows checkouts | **Fixed** |
+| `core-beta/base.html` linked `workshop.css` via `url_for('views.themes')`, which CTFd rewrites to `workshop.min.css` (404), so the override file never loaded | **Fixed** (uses `views.themes_beta`) |
+| Stock CTFd caches the theme manifest in Redis; after a rebuild the old hashed CSS name was served until the cache expired, giving an unstyled site | **Fixed** (`utils/__init__.py` reads the manifest from disk) |
 | Default student password `Netskope1!` hard-coded | **Fixed**: now `$STUDENT_PASSWORD` or `--password` |
 | Empty `SECRET_KEY` default logs everyone out on each container recreate | **Fixed**: required via `.env` |
 | Pages from `data/` were always visible and public | **Improved**: front-matter `hidden:` and `auth_required:` (used for Credentials / Windows10) |

@@ -34,10 +34,12 @@ def _get_asset_json(path):
 
 
 def get_asset_json(path):
-    # Ignore caching if we are in debug mode
-    if app.debug:
-        return _get_asset_json.__wrapped__(path)
-    return _get_asset_json(path)
+    # Hack the Brewery: always read the theme manifest from disk.
+    # Upstream memoizes it in the cache (Redis). Redis outlives an app rebuild,
+    # so a rebuilt container kept serving the PREVIOUS build's hashed CSS/JS
+    # file names (404 -> completely unstyled pages) until the cache expired.
+    # The file is tiny, so reading it per request is cheap.
+    return _get_asset_json.__wrapped__(path)
 
 
 @cache.memoize()

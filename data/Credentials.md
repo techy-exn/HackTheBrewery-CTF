@@ -4,127 +4,83 @@ auth_required: true
 # old route: /Credentials
 ---
 
-<style>
-   
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f4f4f4;
-      font-family: Arial, sans-serif;
-    }
+# Credentials
 
-    table {
-      border-collapse: collapse;
-      width: 95%;
-      max-width: none;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      table-layout: auto; /* Allow columns to grow with content */
-      word-wrap: break-word;
-    }
+Go to the Navigator to easily access all From Blackout To Lockout resources, security solutions and VMs.
 
-    th, td {
-      border: 1px solid #ccc;
-      padding: 12px 15px;
-      text-align: center;
-    }
+> **Tip:** click any value, or the copy icon next to it, to copy it. Replace `X` with your `USER-NUMBER`.
 
-    th {
-      background-color: #007bff;
-      color: white;
-    }
+The shared lab password is `OTworkshop123!`
 
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-  </style>
-
-<br>
-
-# Credential Table
-
-Go to the Navigator to easily access all From Blackout To Lockout Resources, Security Solutions and VM's.
-
-⚠️ The **From Blackout To Lockout password** is `OTworkshop123!`
-
-<br>
-
-  <table>
+<table>
+  <thead>
     <tr>
-      <th>Application Name</th>
-      <th>Authentication Method</th>
+      <th>Application</th>
+      <th>Authentication</th>
       <th>Username</th>
       <th>Password</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
-      <td>Fortinet and Nozomi</td>
+      <td><strong>Fortinet and Nozomi</strong></td>
       <td>Password</td>
-      <td>user</td>
-      <td>OTworkshop123!</td>
+      <td><code>user</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>SentinelOne Console</td>
+      <td><strong>SentinelOne Console</strong></td>
       <td>Password</td>
-      <td>userX</td>
-      <td>OTworkshop123!</td>
+      <td><code>userX</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>Admin OT DC</td>
+      <td><strong>Admin OT DC</strong></td>
       <td>Password</td>
-      <td>engineeringadmin</td>
-      <td>OTworkshop123!</td>
+      <td><code>engineeringadmin</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>Admin IT DC</td>
+      <td><strong>Admin IT DC</strong></td>
       <td>Password</td>
-      <td>it-admin</td>
-      <td>OTworkshop123!</td>
+      <td><code>it-admin</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>CTFd</td>
+      <td><strong>CTFd</strong></td>
       <td>Password</td>
-      <td>userX</td>
-      <td>OTworkshop123!</td>
+      <td><code>userX</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>Engineering Workstation 1</td>
+      <td><strong>Engineering Workstation 1</strong></td>
       <td>Password</td>
-      <td>ot_engX</td>
-      <td>OTworkshop123!</td>
+      <td><code>ot_engX</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>Domain Controller OT</td>
+      <td><strong>Domain Controller OT</strong></td>
       <td>Password</td>
-      <td>ot_engX</td>
-      <td>OTworkshop123!</td>
+      <td><code>ot_engX</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>IT Workstation<br>(Windows 10)</td>
+      <td><strong>IT Workstation (Windows 10)</strong></td>
       <td>Password</td>
-      <td>it_userX</td>
-      <td>OTworkshop123!</td>
+      <td><code>it_userX</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>Domain Controller IT</td>
+      <td><strong>Domain Controller IT</strong></td>
       <td>Password</td>
-      <td>it_userX</td>
-      <td>OTworkshop123!</td>
+      <td><code>it_userX</code></td>
+      <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>
-      <td>Local admin Windows 7</td>
+      <td><strong>Local admin Windows 7</strong></td>
       <td>Password</td>
-      <td>.\admin</td>
-      <td>Engineeringstation1!</td>
+      <td><code>.\admin</code></td>
+      <td><code>Engineeringstation1!</code></td>
     </tr>
-  </table>
-
-<br>
-
-Replace `X` with your `USER-NUMBER`.
+  </tbody>
+</table>
