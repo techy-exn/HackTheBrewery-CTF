@@ -6,9 +6,9 @@ auth_required: true
 
 # Credentials
 
-Go to the Navigator to easily access all From Blackout To Lockout resources, security solutions and VMs.
+Use these Hack the Brewery credentials only in your assigned CloudShare environment. This page is available after signing in to the CTF platform.
 
-> **Tip:** click any value, or the copy icon next to it, to copy it. Replace `X` with your `USER-NUMBER`.
+Replace `X` with your assigned participant number. Select a value to copy it when needed.
 
 The shared lab password is `OTworkshop123!`
 
@@ -44,12 +44,6 @@ The shared lab password is `OTworkshop123!`
       <td><strong>Admin IT DC</strong></td>
       <td>Password</td>
       <td><code>it-admin</code></td>
-      <td><code>OTworkshop123!</code></td>
-    </tr>
-    <tr>
-      <td><strong>CTFd</strong></td>
-      <td>Password</td>
-      <td><code>userX</code></td>
       <td><code>OTworkshop123!</code></td>
     </tr>
     <tr>

@@ -6,3 +6,10 @@
 .DS_Store
 CTFd/logs/*.log
 .ctfd_secret_key
+
+# Local Node CTF database
+data/workshop.sqlite
+data/workshop.sqlite-shm
+data/workshop.sqlite-wal
+data/backups/
+
